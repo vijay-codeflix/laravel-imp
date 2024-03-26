@@ -66,3 +66,51 @@ There are several PSR documents, each addressing specific aspects of PHP develop
 7. *PSR-15: HTTP Server Request Handlers*: This PSR defines interfaces for handling HTTP requests and generating HTTP responses in PHP. It provides a standardized way for PHP applications to define request handlers and middleware components, enabling interoperability between different frameworks and libraries.
 
 These PSR documents are developed and maintained by the PHP-FIG (PHP Framework Interop Group), which is a community-driven organization focused on improving collaboration and interoperability among PHP projects. Adhering to PSR guidelines can help PHP developers write cleaner, more maintainable code and promote compatibility between different PHP projects.
+
+
+## Life Cycle
+
+In Laravel, the lifecycle of a request involves several stages as it travels through the application's architecture. Here's an overview of the Laravel request lifecycle:
+
+1. *Index.php*:
+   - The entry point for all requests to a Laravel application is the index.php file located in the application's public directory.
+   - This file initializes the Composer autoloader, loads the Laravel application instance, and dispatches the request to the framework.
+
+2. *Bootstrap*:
+   - Laravel's bootstrap process initializes various components of the application, including the environment settings, service container, configuration, error handling, and logging.
+   - The framework also registers middleware and service providers during this stage.
+
+3. *Routing*:
+   - The incoming request is matched to a route defined in the application's route files (web.php, api.php, etc.).
+   - Laravel's router dispatches the request to the appropriate controller or closure based on the route definition.
+
+4. *Middleware*:
+   - Middleware are classes that intercept HTTP requests and responses flowing through the application.
+   - Middleware can perform tasks such as authentication, authorization, logging, session handling, and request manipulation.
+   - Each middleware can modify the request, pass it to the next middleware, and optionally modify the response before it reaches the client.
+
+5. *Controller Dispatch*:
+   - If the route points to a controller action, Laravel dispatches the request to the corresponding controller method.
+   - Controllers contain the application's business logic and are responsible for handling the request, processing data, and returning a response.
+
+6. *Service Resolution*:
+   - Laravel's service container resolves dependencies required by the controller method.
+   - Dependencies can include database connections, repositories, models, services, or other objects registered with the container.
+
+7. *Model Interaction*:
+   - Controllers may interact with Eloquent models to query or manipulate data in the database.
+   - Models represent database tables and provide an object-oriented interface for interacting with the database.
+
+8. *View Rendering*:
+   - Once the controller has processed the request and retrieved the necessary data, it returns a response.
+   - If the response is a view, Laravel renders the view using Blade templating engine and injects any data passed from the controller.
+
+9. *Response Sending*:
+   - The final step in the request lifecycle is sending the HTTP response back to the client.
+   - Laravel handles sending headers and content to the client, including handling redirections, cookies, and session management.
+
+10. *Termination*:
+    - After the response has been sent, Laravel executes any registered termination middleware and performs cleanup tasks.
+    - Application logs may be written, database transactions may be committed, and resources may be released.
+
+Understanding the Laravel request lifecycle is crucial for developers to effectively debug, extend, and optimize their applications. Each stage in the lifecycle provides opportunities for customization, allowing developers to tailor Laravel to the specific requirements of their projects.
